@@ -11,12 +11,13 @@
 
 ### 도움말
 ```
+~]$ cd ./aws-secret2ses-smtp
 ~]$ ./aws-iam-secret_2_aws-ses-smtp.py -h
 ```
 
 ### 사용 방법
 ```
-~]$ aws-iam-secret_2_aws-ses-smtp.py [AccessKEY] [SecretKEY] [REGION]
+~]$ ./aws-iam-secret_2_aws-ses-smtp.py [AccessKEY] [SecretKEY] [REGION]
 ```
 
 ### smtp 패스워드 생성 후 메일 발송 테스트
