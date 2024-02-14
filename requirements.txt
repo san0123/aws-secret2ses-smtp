@@ -1,0 +1,7 @@
+sys
+hmac
+hashlib
+base64
+argparse
+smtplib
+email
