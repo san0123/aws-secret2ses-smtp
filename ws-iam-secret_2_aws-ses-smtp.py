@@ -1,5 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
+"""
+발송자 및 수신자 메일 주소를 입력해야 한다.
+"""
+
+from_email = ""
+to_email = ""
+[root@instance-20220428-0332 ses-smtp]# cat aws-iam-secret_2_aws-ses-smtp.py
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 import sys
 import hmac
 import hashlib
@@ -10,6 +20,7 @@ import email.utils
 from email.header import Header
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+import config
 
 def smtp_test(frommail, tomail, acckey, seckey, region):
     SENDERNAME = 'PySender'
@@ -73,6 +84,13 @@ def calculate_key(secret_access_key, region):
     smtp_password = base64.b64encode(signature_and_version)
     return smtp_password.decode('utf-8')
 
+def config_check(fe, te):
+    if fe is None or fe == "" or te is None or te == "":
+        read = 'N'
+    else:
+        read = 'ask'
+    return read
+
 def main():
     parser = argparse.ArgumentParser(description='AWS IAM Secret Access Key to SMTP password.')
     parser.add_argument('AccessKEY', help='AWS IAM - Access Key ID')
@@ -82,15 +100,17 @@ def main():
     seskey = calculate_key(args.SecretKEY, args.REGION)
     print('make SMTP Password complet.')
 
-    print('testing send e-mail? (Y/n) ')
-    read = str(sys.stdin.readline())
+    print("AWS-SES ID: " + args.AccessKEY)
+    print("AWS-SES PW: " + seskey)
 
-    if read in ('Y\n', 'y\n'):
-        print(smtp_test("FROM@메일주소.com", "TO@메일주소.com", args.AccessKEY, seskey, args.REGION))
+    read = config_check(config.from_email, config.to_email)
+    if read == 'N':
+        pass
     else:
-        print("AWS-SES ID: " + args.AccessKEY)
-        print("AWS-SES PW: " + seskey)
-
+        print('testing send e-mail? (Y/n) ')
+        read = str(sys.stdin.readline())
+        if read in ('Y\n', 'y\n'):
+            print(smtp_test(config.from_email, config.to_email, args.AccessKEY, seskey, args.REGION))
 
 if __name__ == '__main__':
     main()
