@@ -2,13 +2,13 @@
 > make AWS SES SMTP password from AWS-IAM-SecretKey
 ### 목적
 > AWS IAM 에서 발급된 AccessKey, SecretKey 를 입력해서 AWS의 SES(Simply Email Service)에서 사용이 가능한 패스워드(STARTTLS)로 변경한다.
-> ```
+> ```text
 > SECRETKEY: YOURKEYrrpg/JHpyvctStUVcAV9177EAKKmDP37P
 > STARTTLS:  BMhffn64jm4OuEUDmfVEXtEw5UhnjY3aorRUGNtjn/WK
 > ```
 > AWS IAM의 SecretKey 는 40 byte 의 길이를 가지고 STARTTLS 는 44 byte 의 길이를 가진다.
 ### 클론
-> ```bash
+> ```bash 
 > ~]$ git clone https://github.com/san0123/aws-secret2ses-smtp.git
 > ```
 ### 도움말
