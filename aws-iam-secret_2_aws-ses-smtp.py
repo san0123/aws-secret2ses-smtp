@@ -90,8 +90,8 @@ def main():
     seskey = calculate_key(args.SecretKEY, args.REGION)
     print('make SMTP Password complet.')
 
-    print("AWS-SES ID: " + args.AccessKEY)
-    print("AWS-SES PW: " + seskey)
+    print(f"AWS-SES ID: {args.AccessKEY}")
+    print(f"AWS-SES PW: {seskey}")
 
     read = config_check(config.from_email, config.to_email)
     if read == 'N':
