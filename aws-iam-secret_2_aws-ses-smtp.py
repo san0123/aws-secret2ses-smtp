@@ -96,9 +96,9 @@ def main():
     parser.add_argument('REGION', help='us-east-1, us-west-2, ap-northeast-2, etc...')
     args = parser.parse_args()
     seskey = calculate_key(args.SecretKEY, args.REGION)
-    print('make SMTP Password complet.')
+    print("\033[32;1mChanging SecretKEY to SES PASSWORD is complete.\033[0m")
     print("      SES SMTP ID: " + args.AccessKEY)
-    print("Converted SMTP PW: " + seskey)
+    print("Converted SMTP PW: \033[33;1m" + seskey + "\033[0m")
 
     read = config_check(config.from_email, config.to_email)
     if read == 'N':
