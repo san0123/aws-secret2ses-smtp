@@ -86,17 +86,12 @@ def main():
     parser = argparse.ArgumentParser(description='AWS IAM Secret Access Key to SMTP password.')
     parser.add_argument('AccessKEY', help='AWS IAM - Access Key ID')
     parser.add_argument('SecretKEY', help='AWS IAM - Secret Access Key')
-    parser.add_argument('REGION', help='us-east-1, us-west-2, us-gov-east-1, il-central-1, af-south-1,')
-    parser.add_argument(' ', help='eu-west-1, eu-central-1, eu-central-2, eu-south-1, eu-north-1,')
-    parser.add_argument(' ', help='ap-northeast-1, ap-northeast-2, ap-northeast-3, ap-south-1,')
-    parser.add_argument(' ', help='ap-south-2, ap-southeast-1, ap-southeast-2, ap-southeast-3,')
-    parser.add_argument(' ', help='me-south-1, me-central-1')
+    parser.add_argument('REGION', help='us-east-1, us-west-2, ap-northeast-2, etc...')
     args = parser.parse_args()
     seskey = calculate_key(args.SecretKEY, args.REGION)
     print('make SMTP Password complet.')
-
-    print(f"AWS-SES ID: {args.AccessKEY}")
-    print(f"AWS-SES PW: {seskey}")
+    print("      SES SMTP ID: " + args.AccessKEY)
+    print("Converted SMTP PW: " + seskey)
 
     read = config_check(config.from_email, config.to_email)
     if read == 'N':
