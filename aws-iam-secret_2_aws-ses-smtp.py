@@ -20,9 +20,9 @@ def smtp_test(frommail, tomail, acckey, seckey, region, smtpport):
     PASSWORD_SMTP = seckey
     HOST = "email-smtp." + region + ".amazonaws.com"
     PORT = smtpport
-    print("SMTP: email-smtp." + region + ".amazonaws.com:"+str(PORT))
-    print("AUTH: ID="+acckey+"    PW="+seckey)
-    print("From: "+SENDER+"    To: "+RECIPIENT)
+    print("SMTP: email-smtp." + region + ".amazonaws.com:" + str(PORT))
+    print("AUTH: ID=" + acckey + "    PW=" + seckey)
+    print("From: " + SENDER + "    To: " + RECIPIENT)
     SUBJECT = 'AWS SES 메일 테스트'
     BODY_TEXT = """Amazon SES SMTP Email 테스트
 현재 이메일은 Amazone SES 를 통해 발송 되었으며 Python 언어의 smtplib 라이브러리를 사용합니다."""
@@ -69,7 +69,7 @@ def calculate_key(secret_access_key, region):
                     'ap-northeast-3', 'ap-southeast-1', 'ap-southeast-2', 'ap-southeast-3',
                     'ap-south-1', 'ap-south-2', 'me-south-1', 'me-central-1', 'il-central-1', 'af-south-1']
     if region not in SMTP_REGIONS:
-        raise ValueError("The "+region+" Region doesn't have an SMTP endpoint.")
+        raise ValueError("The " + region + " Region doesn't have an SMTP endpoint.")
 
     signature = sign(("AWS4" + secret_access_key).encode('utf-8'), "11111111")
     signature = sign(signature, region)
@@ -104,6 +104,9 @@ def main():
     parser.add_argument('AccessKEY', help='AWS IAM - Access Key ID')
     parser.add_argument('SecretKEY', help='AWS IAM - Secret Access Key')
     parser.add_argument('REGION', help='us-east-1, us-west-2, ap-northeast-2, etc...')
+    if len(sys.argv) < 4:
+        parser.print_help()
+        sys.exit(1)
     args = parser.parse_args()
     seskey = calculate_key(args.SecretKEY, args.REGION)
     print("\033[32;1mChanging SecretKEY to SES PASSWORD is complete.\033[0m")
