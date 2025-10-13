@@ -57,9 +57,10 @@ def sign(key, msg):
     return hmac.new(key, msg.encode('utf-8'), hashlib.sha256).digest()
 
 def calculate_key(secret_access_key, region):
-    SMTP_REGIONS = ['us-east-1', 'us-east-2', 'us-west-2', 'us-gov-west-1', 'sa-east-1',
-                    'ap-northeast-1', 'ap-northeast-2', 'ap-southeast-1', 'ap-southeast-2', 'ap-south-1',
-                    'ca-central-1', 'eu-central-1', 'eu-west-1', 'eu-west-2']
+    SMTP_REGIONS = ['us-east-1', 'us-west-2', 'us-gov-east-1', 'eu-west-1', 'eu-central-1',
+                    'eu-central-2', 'eu-south-1', 'eu-north-1', 'ap-northeast-1', 'ap-northeast-2',
+                    'ap-northeast-3', 'ap-southeast-1', 'ap-southeast-2', 'ap-southeast-3',
+                    'ap-south-1', 'ap-south-2', 'me-south-1', 'me-central-1', 'il-central-1', 'af-south-1']
     if region not in SMTP_REGIONS:
         raise ValueError("The "+region+" Region doesn't have an SMTP endpoint.")
 
@@ -85,7 +86,11 @@ def main():
     parser = argparse.ArgumentParser(description='AWS IAM Secret Access Key to SMTP password.')
     parser.add_argument('AccessKEY', help='AWS IAM - Access Key ID')
     parser.add_argument('SecretKEY', help='AWS IAM - Secret Access Key')
-    parser.add_argument('REGION', help='AWS SES - Region - us-west-2, ap-south-1, etc...')
+    parser.add_argument('REGION', help='us-east-1, us-west-2, us-gov-east-1, il-central-1, af-south-1,')
+    parser.add_argument(' ', help='eu-west-1, eu-central-1, eu-central-2, eu-south-1, eu-north-1,')
+    parser.add_argument(' ', help='ap-northeast-1, ap-northeast-2, ap-northeast-3, ap-south-1,')
+    parser.add_argument(' ', help='ap-south-2, ap-southeast-1, ap-southeast-2, ap-southeast-3,')
+    parser.add_argument(' ', help='me-south-1, me-central-1')
     args = parser.parse_args()
     seskey = calculate_key(args.SecretKEY, args.REGION)
     print('make SMTP Password complet.')
