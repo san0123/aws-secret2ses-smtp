@@ -47,8 +47,9 @@ def smtp_test(frommail, tomail, acckey, seckey, region, smtpport):
         elif PORT in [25, 587, 2587]:
             server = smtplib.SMTP(HOST, PORT)
             server.ehlo()
-            server.starttls()
-            server.ehlo()
+            if server.has_extn('STARTTLS'):
+                server.starttls()
+                server.ehlo()
             server.login(USERNAME_SMTP, PASSWORD_SMTP)
         else:
             raise ValueError(f"지원되지 않는 포트입니다: {PORT}")
