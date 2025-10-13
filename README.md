@@ -23,6 +23,13 @@
 ### smtp 패스워드 생성 후 메일 발송 테스트
 > 사전에 config.py 파일에 발신자 메일 주소 및 수신자 메일 주소를 입력해두면 변환 이후 아래와 같이 발송테스트를 할지 묻는다.
 >> ```bash
+>> """
+>> 발송자 및 수신자 메일 주소를 입력해야 한다.
+>> """
+>> from_email = "noreply@domain.com"
+>> to_email = "mail-receiver@domain.com"
+>> ```
+>> ```bash
 >> ~]$ ./aws-iam-secret_2_aws-ses-smtp.py AAAAAAAAAAAAAAAAAAAA YOURKEYrrpg/JHpyvctStUVcAV9177EAKKmDP37P us-east-1
 >> make SMTP Password complet.
 >> AWS-SES ID: AAAAAAAAAAAAAAAAAAAA
