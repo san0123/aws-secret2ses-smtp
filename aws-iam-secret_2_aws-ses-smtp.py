@@ -12,14 +12,14 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import config
 
-def smtp_test(frommail, tomail, acckey, seckey, region):
+def smtp_test(frommail, tomail, acckey, seckey, region, smtpport):
     SENDERNAME = 'PySender'
     SENDER = frommail
     RECIPIENT = tomail
     USERNAME_SMTP = acckey
     PASSWORD_SMTP = seckey
     HOST = "email-smtp." + region + ".amazonaws.com"
-    PORT = 587
+    PORT = smtpport
     print("SMTP: email-smtp." + region + ".amazonaws.com:"+str(PORT))
     print("AUTH: ID="+acckey+"    PW="+seckey)
     print("From: "+SENDER+"    To: "+RECIPIENT)
@@ -41,11 +41,17 @@ def smtp_test(frommail, tomail, acckey, seckey, region):
     msg.attach(MIMEText(BODY_TEXT, 'plain', 'utf-8'))
     msg.attach(MIMEText(BODY_HTML, 'html', 'utf-8'))
     try:
-        server = smtplib.SMTP(HOST, PORT)
-        server.ehlo()
-        server.starttls()
-        server.ehlo()
-        server.login(USERNAME_SMTP, PASSWORD_SMTP)
+        if PORT == 465:
+            server = smtplib.SMTP_SSL(HOST, PORT)
+            server.login(USERNAME_SMTP, PASSWORD_SMTP)
+        elif PORT in [25, 587, 2587]:
+            server = smtplib.SMTP(HOST, PORT)
+            server.ehlo()
+            server.starttls()
+            server.ehlo()
+            server.login(USERNAME_SMTP, PASSWORD_SMTP)
+        else:
+            raise ValueError(f"지원되지 않는 포트입니다: {PORT}")
         server.sendmail(SENDER, RECIPIENT, msg.as_string())
         server.close()
         res = "Email sent!"
@@ -100,7 +106,8 @@ def main():
         print('testing send e-mail? (Y/n) ')
         read = str(sys.stdin.readline())
         if read in ('Y\n', 'y\n'):
-            print(smtp_test(config.from_email, config.to_email, args.AccessKEY, seskey, args.REGION))
+            ### 465 = ssl # 25, 587, 2587 = tls
+            print(smtp_test(config.from_email, config.to_email, args.AccessKEY, seskey, args.REGION, 587))
 
 if __name__ == '__main__':
     main()
