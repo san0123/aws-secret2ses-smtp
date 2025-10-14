@@ -91,14 +91,15 @@ def config_check(fe, te):
 
 def main():
     parser = argparse.ArgumentParser(
-        description='AWS IAM Secret Access Key to SMTP password.'
-        + '\n\nHow to Use:\n  ~]# ./aws-iam-secret_2_aws-ses-smtp.py '
+        description='AWS IAM Secret Access Key to SMTP password.\n  '
+        + 'To test email sending using the converted key, update the config.py file.\n\n'
+        + 'How to Use:\n  ~]# ./aws-iam-secret_2_aws-ses-smtp.py '
         + 'AKIA0000000ACCESSKEY EXAMPLE0SECRETKEY00000000000000000000000 ap-northeast-2',
-        epilog="Regions:\n  "
+        epilog="Region:\n  "
         + 'us-east-1, us-west-2, us-gov-east-1, il-central-1, af-south-1,\n  '
         + 'eu-west-1, eu-central-1, eu-central-2, eu-south-1, eu-north-1,\n  '
-        + 'ap-northeast-1 ap-northeast-2 ap-northeast-3 ap-south-1 ap-south-2,\n  '
-        + 'ap-southeast-1 ap-southeast-2 ap-southeast-3 me-south-1 me-central-1',
+        + 'ap-northeast-1, ap-northeast-2, ap-northeast-3, ap-south-1, ap-south-2,\n  '
+        + 'ap-southeast-1, ap-southeast-2, ap-southeast-3, me-south-1, me-central-1',
         formatter_class=argparse.RawTextHelpFormatter
     )
     parser.add_argument('AccessKEY', help='AWS IAM - Access Key ID')
